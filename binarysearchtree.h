@@ -4,7 +4,6 @@
 #include <iostream>
 #include <cstring>
 #include "person.h"
-#include "linkedlist.h"
 
 
 using namespace std;
@@ -14,65 +13,41 @@ class BST {
 	BST *left, *right;
 
 public:
-	// Default constructor.
 	BST();
-
-	// Parameterized constructor.
 	BST(string, string, int);
-
-	// Insert function.
 	BST* Insert(BST*, string, string, int);
-
-	// Inorder traversal.
 	void Inorder(BST*);
-
     BST* minValueNode(BST*);
-
     BST* deleteNode(BST*, string);
+    Person search(BST*, string);
 };
 
-// Default Constructor definition.
 BST ::BST() : data("","",0), left(NULL), right(NULL)
 {
 }
 
-// Parameterized Constructor definition.
 BST ::BST(string firstName, string lastName, int phone)
 {
 	data = Person(firstName, lastName, phone);
 	left = right = NULL;
 }
 
-// Insert function definition.
 BST* BST ::Insert(BST* root, string firstName, string lastName, int phone)
 {
-	if (!root) {
-		// Insert the first node, if root is NULL.
+	if (root == NULL) {
 		return new BST(firstName, lastName, phone);
 	}
 
-	// Insert data.
 	if (strcmp(firstName.c_str(), root->data.firstName.c_str()) > 0) {
-		// Insert right node data, if the 'value'
-		// to be inserted is greater than 'root' node data.
-
-		// Process right nodes.
 		root->right = Insert(root->right, firstName, lastName, phone);
 	}
 	else if (strcmp(firstName.c_str(), root->data.firstName.c_str()) < 0){
-		// Insert left node data, if the 'value'
-		// to be inserted is smaller than 'root' node data.
-
-		// Process left nodes.
 		root->left = Insert(root->left, firstName, lastName, phone);
 	}
 
-	// Return 'root' node, after insertion.
 	return root;
 }
 
-// Inorder traversal function.
-// This gives data in sorted order.
 void BST ::Inorder(BST* root)
 {
 	if (!root) {
@@ -142,6 +117,18 @@ BST* BST::deleteNode(BST* root, string firstName)
         root->right = deleteNode(root->right, temp->data.firstName);
     }
     return root;
+}
+
+Person BST::search(BST* root, string firstName)
+{
+    if (root == NULL || root->data.firstName == firstName)
+       return root->data;
+    
+    if (strcmp(firstName.c_str(), root->data.firstName.c_str()) > 0)
+       return search(root->right, firstName);
+ 
+    if (strcmp(firstName.c_str(), root->data.firstName.c_str()) < 0)
+        return search(root->left, firstName);
 }
 
 #endif

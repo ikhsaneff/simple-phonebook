@@ -10,6 +10,7 @@ class Person
 {
 public:
     string firstName, lastName;
+    // string email, address, organization
     int phoneNum;
     Person(string, string, int);
     Person();
