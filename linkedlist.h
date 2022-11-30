@@ -18,13 +18,13 @@ public:
 
 	Node()
 	{
-		data = Person("","",0);
+		data = Person("","","","","");
 		next = NULL;
 	}
 
-	Node(string fName, string lName, int phone)
+	Node(string fullName, string phone, string mail = "", string addrs = "", string org = "")
 	{
-		this->data = Person(fName, lName, phone);
+		this->data = Person(fullName, phone, mail, addrs, org);
 		this->next = NULL;
 	}
 };
@@ -36,7 +36,7 @@ class LinkedList
 
 public:
 	LinkedList() { head = NULL; }
-	void push(string, string, int);
+	void push(string, string, string, string, string);
 	void printList();
 	void deleteNode(int);
 	void getIndex(string);
@@ -52,7 +52,7 @@ void LinkedList::deleteNode(int index)
     // Check if the list is empty
 	if (head == NULL)
     {
-		cout << "List is empty." << endl;
+		cout << "Recycle bin is empty.\n" << endl;
 		return;
 	}
 
@@ -99,10 +99,10 @@ void LinkedList::deleteNode(int index)
 }
 
 // Function to insert a new node.
-void LinkedList::push(string fName, string lName, int phone)
+void LinkedList::push(string fullName, string phone, string mail = "", string addrs = "", string org = "")
 {
 	// Create new Node.
-	Node* newNode = new Node(fName, lName, phone);
+	Node* newNode = new Node(fullName, phone, mail, addrs, org);
 
 	// Assign to head
 	if (head == NULL) {
@@ -127,7 +127,7 @@ void LinkedList::printList()
 	int counter = 1;
 
 	if (head == NULL) {
-		cout << "List is empty" << endl;
+		cout << "Recycle bin is empty.\n" << endl;
 		return;
 	}
 

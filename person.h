@@ -9,10 +9,8 @@ using namespace std;
 class Person
 {
 public:
-    string firstName, lastName;
-    // string email, address, organization
-    int phoneNum;
-    Person(string, string, int);
+    string fullName, phoneNum, email, address, organization;
+    Person(string, string, string, string, string);
     Person();
     void printPerson();
 };
@@ -22,17 +20,22 @@ Person::Person()
 
 }
 
-Person::Person(string fName, string lName, int phone)
+Person::Person(string name, string phone, string mail, string addrs, string org)
 {
-    firstName = fName;
-    lastName = lName;
+    fullName = name;
     phoneNum = phone;
+    email = mail;
+    address = addrs;
+    organization = org;
 }
 
 void Person::printPerson()
 {
-    cout << "Name: " << firstName << " " << lastName << endl;
-    cout << "Phone: " << phoneNum << "\n" << endl;
+    cout << "  > Full Name    : " << fullName << endl;
+    cout << "  > Phone Number : " << phoneNum << endl;
+    cout << "  > Email        : " << email << endl;
+    cout << "  > Address      : " << address << endl;
+    cout << "  > Organization : " << organization << "\n" << endl;
 }
 
 #endif

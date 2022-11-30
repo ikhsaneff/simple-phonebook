@@ -1,31 +1,41 @@
 #include "phonebook.h"
+#include <conio.h>
 
 int main()
 {
-	// delete by full name
-	// search by full name
-	// delete by phone
-	// search by phone
-	// add more details
-	// modify details
+	// Bug List:
+	// - Delete contact searchByName()
+	// - Delete contact showContact() cannot go back to menu
+	// - Restore contact error
 
 	Phonebook newPhonebook;
-	
-	newPhonebook.insertContact("User0F", "User0L", 50);
-	newPhonebook.insertContact("User1F", "User1L", 60);
-	newPhonebook.insertContact("User2F", "User2L", 70);
+	int prompt = 4, prompt1;
+	string fullName;
 
-    newPhonebook.deleteContact("User2F");
+	while (prompt != 0)
+	{
+		cout << "Welcome to Phonebook!" << endl;
+		cout << "What do you want to do?" << endl;
+		cout << " 1) Show contacts" << endl;
+		cout << " 2) Add new contacts" << endl;
+		cout << " 3) Show recycle bin" << endl;
+		cout << " 0) Exit" << endl;
+		cout << "Enter: ";
+		cin >> prompt;
+		system("cls");
 
-	cout << "Contact List: \n";
-    newPhonebook.showContact();
+		if (prompt == 1)
+		{
+			newPhonebook.showContact();
+		}
+		else if (prompt == 2)
+		{
+			newPhonebook.addNewContactMenu();
+		}
+		else if (prompt ==3)
+		{
+			newPhonebook.showRecycleBin();
+		}
+	}
 
-	cout << "Recycle Bin List: \n";
-    newPhonebook.showRecycleBin();
-
-    newPhonebook.restoreRecycleBin(1);
-
-	cout << "Restored Contacts: \n";
-	newPhonebook.showContact();
-	return 0;
 }

@@ -13,36 +13,38 @@ class BST {
 	BST *left, *right;
 
 public:
+    int counter = 1;
 	BST();
-	BST(string, string, int);
-	BST* Insert(BST*, string, string, int);
+	BST(string, string, string, string, string);
+	BST* Insert(BST*, string, string, string, string, string);
 	void Inorder(BST*);
     BST* minValueNode(BST*);
     BST* deleteNode(BST*, string);
     Person search(BST*, string);
+    Person searchByPhone(BST*, string);
 };
 
-BST ::BST() : data("","",0), left(NULL), right(NULL)
+BST ::BST() : data("","","","",""), left(NULL), right(NULL)
 {
 }
 
-BST ::BST(string firstName, string lastName, int phone)
+BST ::BST(string fullName, string phone, string mail = "", string addrs = "", string org = "")
 {
-	data = Person(firstName, lastName, phone);
+	data = Person(fullName, phone, mail, addrs, org);
 	left = right = NULL;
 }
 
-BST* BST ::Insert(BST* root, string firstName, string lastName, int phone)
+BST* BST ::Insert(BST* root, string fullName, string phone, string mail = "", string addrs = "", string org = "")
 {
 	if (root == NULL) {
-		return new BST(firstName, lastName, phone);
+		return new BST(fullName, phone, mail, addrs, org);
 	}
 
-	if (strcmp(firstName.c_str(), root->data.firstName.c_str()) > 0) {
-		root->right = Insert(root->right, firstName, lastName, phone);
+	if (strcmp(fullName.c_str(), root->data.fullName.c_str()) > 0) {
+		root->right = Insert(root->right, fullName, phone, mail, addrs, org);
 	}
-	else if (strcmp(firstName.c_str(), root->data.firstName.c_str()) < 0){
-		root->left = Insert(root->left, firstName, lastName, phone);
+	else if (strcmp(fullName.c_str(), root->data.fullName.c_str()) < 0){
+		root->left = Insert(root->left, fullName, phone, mail, addrs, org);
 	}
 
 	return root;
@@ -54,8 +56,11 @@ void BST ::Inorder(BST* root)
 		return;
 	}
 	Inorder(root->left);
-	root->data.printPerson();
+    cout << " - ";
+	cout << root->data.fullName << "\n";
+    counter++;
 	Inorder(root->right);
+    counter = 1;
 }
 
 BST* BST::minValueNode(BST* node)
@@ -69,7 +74,7 @@ BST* BST::minValueNode(BST* node)
     return current;
 }
 
-BST* BST::deleteNode(BST* root, string firstName)
+BST* BST::deleteNode(BST* root, string fullName)
 {
     // base case
     if (root == NULL)
@@ -78,14 +83,14 @@ BST* BST::deleteNode(BST* root, string firstName)
     // If the key to be deleted is
     // smaller than the root's
     // key, then it lies in left subtree
-    if (strcmp(firstName.c_str(), root->data.firstName.c_str()) < 0)
-        root->left = deleteNode(root->left, firstName);
+    if (strcmp(fullName.c_str(), root->data.fullName.c_str()) < 0)
+        root->left = deleteNode(root->left, fullName);
 
     // If the key to be deleted is
     // greater than the root's
     // key, then it lies in right subtree
-    else if (strcmp(firstName.c_str(), root->data.firstName.c_str()) > 0)
-        root->right = deleteNode(root->right, firstName);
+    else if (strcmp(fullName.c_str(), root->data.fullName.c_str()) > 0)
+        root->right = deleteNode(root->right, fullName);
 
     // if key is same as root's key, then This is the node
     // to be deleted
@@ -114,21 +119,33 @@ BST* BST::deleteNode(BST* root, string firstName)
         root->data = temp->data;
 
         // Delete the inorder successor
-        root->right = deleteNode(root->right, temp->data.firstName);
+        root->right = deleteNode(root->right, temp->data.fullName);
     }
     return root;
 }
 
-Person BST::search(BST* root, string firstName)
+Person BST::search(BST* root, string fullName)
 {
-    if (root == NULL || root->data.firstName == firstName)
+    if (root == NULL || root->data.fullName == fullName)
        return root->data;
     
-    if (strcmp(firstName.c_str(), root->data.firstName.c_str()) > 0)
-       return search(root->right, firstName);
+    if (strcmp(fullName.c_str(), root->data.fullName.c_str()) > 0)
+       return search(root->right, fullName);
  
-    if (strcmp(firstName.c_str(), root->data.firstName.c_str()) < 0)
-        return search(root->left, firstName);
+    if (strcmp(fullName.c_str(), root->data.fullName.c_str()) < 0)
+        return search(root->left, fullName);
+}
+
+Person BST::searchByPhone(BST* root, string phoneNum)
+{
+    if (root == NULL || root->data.phoneNum == phoneNum)
+       return root->data;
+    
+    if (strcmp(phoneNum.c_str(), root->data.phoneNum.c_str()) > 0)
+       return searchByPhone(root->right, phoneNum);
+ 
+    if (strcmp(phoneNum.c_str(), root->data.phoneNum.c_str()) < 0)
+        return searchByPhone(root->left, phoneNum);
 }
 
 #endif
