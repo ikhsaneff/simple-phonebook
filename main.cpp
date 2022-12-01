@@ -3,11 +3,8 @@
 
 int main()
 {
-	// To Do List:
-	// - Modify feature
-
 	Phonebook newPhonebook;
-	int prompt = 4, prompt1 = 4;
+	int prompt = 4;
 	string fullName;
 
 	while (prompt != 0)

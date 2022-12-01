@@ -25,9 +25,7 @@ public:
 void Phonebook::insertContact(string fullName, string phone, string mail = "", string addrs = "", string org = "")
 {
     if (root == NULL)
-    {
         root = contacts.Insert(root, fullName, phone, mail, addrs, org);
-    }
     else
         contacts.Insert(root, fullName, phone, mail, addrs, org);
 }
@@ -480,7 +478,7 @@ void Phonebook::searchMenu()
             }
             else
             {
-                searchByName(fullName);
+                searchByPhone(phoneNum);
             }
 
         }

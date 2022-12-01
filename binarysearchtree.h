@@ -56,9 +56,7 @@ BST* BST ::Insert(BST* root, string fullName, string phone, string mail = "", st
 void BST ::Inorder(BST* root)
 {
 	if (!root) 
-    {
 		return;
-	}
 
 	Inorder(root->left);
     cout << " - ";
@@ -120,7 +118,8 @@ BST* BST::deleteNode(BST* root, string fullName)
 }
 
 Person BST::search(BST* root, string fullName)
-{   if (root == NULL)
+{   
+    if (root == NULL)
         return not_found;
     
     if (root->data.fullName == fullName)
@@ -131,7 +130,6 @@ Person BST::search(BST* root, string fullName)
  
     if (strcmp(fullName.c_str(), root->data.fullName.c_str()) < 0)
         return search(root->left, fullName);
-    
 }
 
 Person BST::searchByPhone(BST* root, string phoneNum)
