@@ -15,6 +15,7 @@ public:
     void showContact();
     void showRecycleBin();
     void restoreRecycleBin(int);
+    void searchMenu();
     void searchByName(string);
     void searchByPhone(string);
     void modifyContacts(string);
@@ -33,7 +34,7 @@ void Phonebook::insertContact(string fullName, string phone, string mail = "", s
 
 void Phonebook::deleteContact(string fullName)
 {
-    string fName, lName, phone, email, address, organization;
+    string fName, phone, email, address, organization;
 
     tempPerson = contacts.search(root, fullName);
     fName = tempPerson.fullName;
@@ -65,17 +66,21 @@ void Phonebook::showContact()
 
         if (prompt == 1)
         {
-            cout << "Enter name: ";
+            cout << "Enter full name: ";
             cin.ignore();
             getline(cin, fullName);
+
+            transform(fullName.begin(), fullName.end(), fullName.begin(), ::toupper);
 
             searchByName(fullName);
         }
         else if (prompt == 2)
         {
-            cout << "Enter name: ";
+            cout << "Enter full name: ";
             cin.ignore();
             getline(cin, fullName);
+
+            transform(fullName.begin(), fullName.end(), fullName.begin(), ::toupper);
 
             deleteContact(fullName);
             getche();
@@ -183,7 +188,7 @@ void Phonebook::searchByName(string name)
     int prompt;
 
     cout << "CONTACT DETAILS\n\n";
-
+    
     contacts.search(root, name).printPerson();
 
     cout << "1: Delete Contact | 2: Modify Contact | 0: Back \n";
@@ -224,6 +229,8 @@ void Phonebook::addNewContactMenu()
     cout << " Enter Organization : ";
     getline(cin, organization);
 
+    transform(fName.begin(), fName.end(), fName.begin(), ::toupper);
+
     insertContact(fName, phone, email, address, organization);
 
     cout << "\nContact successfully added!\n";
@@ -243,23 +250,61 @@ void Phonebook::addNewContactMenu()
 
 void Phonebook::searchByPhone(string phone)
 {
+    system("cls");
+    
+    int prompt;
+    string name;
+
+    cout << "CONTACT DETAILS\n\n";
+
     contacts.searchByPhone(root, phone).printPerson();
+    
+    tempPerson = contacts.searchByPhone(root, phone);
+    name = tempPerson.fullName;
+
+    cout << "1: Delete Contact | 2: Modify Contact | 0: Back \n";
+    cout << "Enter: ";
+    cin >> prompt;
+
+    if (prompt == 1)
+    {
+        deleteContact(name);
+        getche();
+    }
+    else if (prompt == 2)
+    {
+        modifyContacts(name);
+    }
+    else
+    {
+
+    }
 }
 
 void Phonebook::modifyContacts(string name)
 {
-    string newName = name;
+    system("cls");
+
+    string fName, phone, email, address, organization;
+    string tempName = name;
+    string newInput;
+
+    int prompt;
+    char again;
+
+    tempPerson = contacts.search(root, tempName);
+    fName = tempPerson.fullName;
+    phone = tempPerson.phoneNum;
+    email = tempPerson.email;
+    address = tempPerson.address;
+    organization = tempPerson.organization;
 
     while (true)
     {
-        system("cls");
+        cout << "MODIFY CONTACT\n\n";
 
-        cout << "MODIFY CONTACT1\n\n";
+        contacts.search(root, tempName).printPerson();
 
-        contacts.search(root, newName).printPerson();
-
-        int prompt1;
-        
         cout << "What do you want to change?\n";
         cout << " 1) Name\n";
         cout << " 2) Phone\n";
@@ -268,27 +313,185 @@ void Phonebook::modifyContacts(string name)
         cout << " 5) Organization\n";
         cout << " 0) Back\n";
         cout << "Enter: ";
-        cin >> prompt1;
-        
-        switch (prompt1)
+        cin >> prompt;
+
+        system("cls");
+
+        cout << "MODIFY CONTACT\n\n";
+
+        contacts.search(root, tempName).printPerson();
+            
+        switch (prompt)
         {
-            case 1:
-                system("cls");
-
-                cout << "MODIFY CONTACT2\n\n";
-
-                contacts.search(root, newName).printPerson();
-
-                string newInput;
+            case 1: 
                 cout << "Enter new name: ";
                 cin.ignore();
                 getline(cin, newInput);
 
-                contacts.search(root, newName).fullName = newInput;
-                newName = newInput;
+                transform(newInput.begin(), newInput.end(), newInput.begin(), ::toupper);
+
+                fName = newInput;
+
+                root = contacts.deleteNode(root, tempName);
+
+                tempName = newInput;
+
+                insertContact(fName, phone, email, address, organization);
                 cout << "Modify again (y/n)?";
+                cin >> again;
+
+                if (again == 'n')
+                {
+                    return;
+                }
+                break;
+
+            case 2: 
+                cout << "Enter new phone number: ";
+                cin.ignore();
+                getline(cin, newInput);
+
+                phone = newInput;
+
+                root = contacts.deleteNode(root, tempName);
+
+                insertContact(fName, phone, email, address, organization);
+                cout << "Modify again (y/n)?";
+                cin >> again;
+
+                if (again == 'n')
+                {
+                    return;
+                }
+                break;
+
+            case 3:
+                cout << "Enter new email: ";
+                cin.ignore();
+                getline(cin, newInput);
+
+                email = newInput;
+
+                root = contacts.deleteNode(root, tempName);
+
+                insertContact(fName, phone, email, address, organization);
+                cout << "Modify again (y/n)?";
+                cin >> again;
+
+                if (again == 'n')
+                {
+                    return;
+                }
+                break;
+            
+            case 4:
+                cout << "Enter new address: ";
+                cin.ignore();
+                getline(cin, newInput);
+
+                address = newInput;
+
+                root = contacts.deleteNode(root, tempName);
+
+                insertContact(fName, phone, email, address, organization);
+                cout << "Modify again (y/n)?";
+                cin >> again;
+
+                if (again == 'n')
+                {
+                    return;
+                }
+                break;
+            
+            case 5:
+                cout << "Enter new organization: ";
+                cin.ignore();
+                getline(cin, newInput);
+
+                organization = newInput;
+
+                root = contacts.deleteNode(root, tempName);
+
+                insertContact(fName, phone, email, address, organization);
+                cout << "Modify again (y/n)?";
+                cin >> again;
+
+                if (again == 'n')
+                {
+                    return;
+                }
+                break;
+            case 0:
+                return;
         }
     }
 }
 
+void Phonebook::searchMenu()
+{
+    while (true)
+    {
+        int prompt;
+        string fullName, phoneNum;
+
+        cout << "SEARCH MENU\n\n";
+
+        cout << "How do you want to search:\n";
+        cout << " 1) By Full Name\n";
+        cout << " 2) By Phone Number\n";
+        cout << " 0) Back\n";
+        cout << "Enter: ";
+        cin >> prompt;
+        system("cls");
+
+        if (prompt == 1)
+        {
+            cout << "SEARCH MENU\n\n";
+
+            cout << "Enter full name: ";
+            cin.ignore();
+            getline(cin, fullName);
+
+            transform(fullName.begin(), fullName.end(), fullName.begin(), ::toupper);
+
+            if (contacts.search(root, fullName).fullName == "Not found")
+            {
+                cout << "Contact not found.";
+                getche();
+            }
+            else
+            {
+                searchByName(fullName);
+            }
+
+        }
+        else if (prompt == 2)
+        {
+            cout << "SEARCH MENU\n\n";
+            
+            cout << "Enter phone number: ";
+            cin.ignore();
+            getline(cin, phoneNum);
+
+            if (contacts.searchByPhone(root, phoneNum).fullName == "Not found")
+            {
+                cout << "Contact not found.";
+                getche();
+            }
+            else
+            {
+                searchByName(fullName);
+            }
+
+        }
+        else
+        {
+            system("cls");
+            return;
+        }
+        
+        system("cls");
+    }
+    
+}
 #endif // PHONEBOOK_H

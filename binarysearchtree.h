@@ -16,6 +16,7 @@ class BST
 public:
 	BST();
 	BST(string, string, string, string, string);
+    Person not_found = Person("Not found", "Not found", "Not found", "Not found", "Not found");
 	BST* Insert(BST*, string, string, string, string, string);
 	void Inorder(BST*);
     BST* deleteNode(BST*, string);
@@ -119,22 +120,26 @@ BST* BST::deleteNode(BST* root, string fullName)
 }
 
 Person BST::search(BST* root, string fullName)
-{
-    if (root == NULL || root->data.fullName == fullName)
-       return root->data;
+{   if (root == NULL)
+        return not_found;
+    
+    if (root->data.fullName == fullName)
+        return root->data;
     
     if (strcmp(fullName.c_str(), root->data.fullName.c_str()) > 0)
-       return search(root->right, fullName);
+        return search(root->right, fullName);
  
     if (strcmp(fullName.c_str(), root->data.fullName.c_str()) < 0)
         return search(root->left, fullName);
     
-    cout << "Not found.\n";
 }
 
 Person BST::searchByPhone(BST* root, string phoneNum)
 {
-    if (root == NULL || root->data.phoneNum == phoneNum)
+    if (root == NULL)
+        return not_found;
+
+    if (root->data.phoneNum == phoneNum)
        return root->data;
     
     if (strcmp(phoneNum.c_str(), root->data.phoneNum.c_str()) > 0)

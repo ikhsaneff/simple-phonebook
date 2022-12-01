@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <string>
+#include <cstring>
+#include <algorithm>
 
 using namespace std;
 
@@ -42,6 +44,7 @@ void Person::printPerson()
 void Person::modify()
 {
     int prompt;
+    char again;
 
     cout << "What do you want to change?\n";
     cout << " 1) Name\n";
@@ -66,7 +69,13 @@ void Person::modify()
             getline(cin, newInput);
 
             fullName = newInput;
-            cout << "Modify again (y/n)?";
+            cout << "Modify again (y/n) ?";
+            cin >> again;
+
+            if (again == 'y')
+            {
+                modify();
+            }
     }
 }
 
