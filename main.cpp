@@ -3,13 +3,14 @@
 
 int main()
 {
-	// Bug List:
-	// - Delete contact searchByName()
-	// - Delete contact showContact() cannot go back to menu
-	// - Restore contact error
+	// To Do List:
+	// - Modify feature
+	// - Add search menu
+	// - Convert string to lower
+	// - Full name note
 
 	Phonebook newPhonebook;
-	int prompt = 4, prompt1;
+	int prompt = 4, prompt1 = 4;
 	string fullName;
 
 	while (prompt != 0)

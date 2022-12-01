@@ -49,14 +49,12 @@ void LinkedList::deleteNode(int index)
 	Node *temp1 = head, *temp2 = NULL;
 	int listLen = 0;
 
-    // Check if the list is empty
 	if (head == NULL)
     {
 		cout << "Recycle bin is empty.\n" << endl;
 		return;
 	}
 
-	// Get list length
 	while (temp1 != NULL)
     {
 		temp1 = temp1->next;
@@ -66,23 +64,19 @@ void LinkedList::deleteNode(int index)
     temp1 = head;
 	listLen -= 1;
 
-	// Check if the index is out of range
 	if (listLen < index)
     {
 		cout << "Index out of range" << endl;
 		return;
 	}
 
-	// Delete head.
 	if (index == 0)
     {
-		// Update head
 		head = head->next;
 		delete temp1;
 		return;
 	}
 
-	// Traverse the list to find the node to be deleted.
 	while (index > 0)
     {
 		temp2 = temp1;
@@ -90,50 +84,40 @@ void LinkedList::deleteNode(int index)
 		index--;
 	}
 
-	// Change the next pointer
-	// of the previous node.
 	temp2->next = temp1->next;
 
-	// Delete the node
 	delete temp1;
 }
 
-// Function to insert a new node.
 void LinkedList::push(string fullName, string phone, string mail = "", string addrs = "", string org = "")
 {
-	// Create new Node.
 	Node* newNode = new Node(fullName, phone, mail, addrs, org);
 
-	// Assign to head
 	if (head == NULL) {
 		head = newNode;
 		return;
 	}
 
-	// Traverse till end of list
 	Node* temp = head;
 	while (temp->next != NULL) {
 		temp = temp->next;
 	}
 
-	// Insert data to the last.
 	temp->next = newNode;
 }
 
-// Method to print list's elements
 void LinkedList::printList()
 {
 	Node* temp = head;
 	int counter = 1;
 
 	if (head == NULL) {
-		cout << "Recycle bin is empty.\n" << endl;
+		cout << "Recycle bin is empty." << endl;
 		return;
 	}
 
 	while (temp != NULL) {
-		cout << counter << ". ";
-		temp->data.printPerson();
+		cout << counter << ". " << temp->data.fullName << endl;
 		temp = temp->next;
 		counter++;
 	}
